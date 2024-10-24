@@ -1,73 +1,98 @@
 
-
-function randomInteger(min, max) {       // function to generate a random number between two limits, included
-    return Math.floor(Math.random() * (max - min +1)) + min;
-}
-
-var computerNumber = randomInteger(1,3); // store the choice between 1 and 3 
-var computerChoice;                      // will store the return string corresponding 
-var lowerCaseText;                       // user prompt in all lower case
+var humanScore = 0;                      // initialize the human score to 0
+var computerScore = 0;                   // initialize the computer score to 0
 
 
 
 
-
- function transform (randomNumber) {     // convert ther number into the string corresponding
-    
-    if (randomNumber === 1) {
-        computerChoice = ('Rock');
-    } else if (randomNumber === 2) {
-        computerChoice = ('Paper');
-    } else if (randomNumber === 3) {
-        computerChoice = ('Scissors');
-    };
-    return computerChoice;
-}
-
-
-
-
-transform(computerNumber);              // apply the transform function to the computer number
-console.log(computerChoice);
-
-
-// function capitalizeFirstLetter () {
-
-function getHumanChoice() {
-    let ask = confirm("Do you want to play rock paper scissors ?");
-    if(ask === true) {
-        alert ("Yay, let's play");
-        humanPrompt();
-    } else {
-        alert ("Maybe another time....")
+function getComputerChoice () {
+    var randomNumber = Math.random();
+    if (randomNumber <= 0.3) {
+        return "rock";
+    }else if (randomNumber >= 0.7) {
+        return "scissors";
+    }else {
+        return "paper"
     }
 }
 
 
 
-// var humanPrompt = function() {    // function that ask the user for his choice and return it lower case only
-function humanPrompt() { 
-    var userText = prompt("Rock, Paper or Scissors ?")
-
-        if (userText === null ) { // answer in case user don't enter anything or blank space (baby)
-            alert("Maybe another time then....");
-            
-        }else if (userText === "") {
-            alert("You need to enter your choice")
-            humanPrompt() 
-        }else if (!/[a-zA-Z]+$/.test(userText)) { // makes sure the user only input text
-            alert("You need to only enter letters")
-            humanPrompt()
+function getHumanChoice () {
+    var humanPrompt = prompt("Rock, Paper or Scissors ?");
+    
+    if (humanPrompt === null ) { // answer in case user don't enter anything or blank space (baby)
+        alert("Maybe another time then....");
+        
+    }else if (humanPrompt === "") {
+        alert("You need to enter your choice");
+        getHumanChoice();
+    }else if (!/[a-zA-Z]+$/.test(humanPrompt)) { // makes sure the user only input text
+        alert("You need to only enter letters");
+        getHumanChoice();
+    }else {
+        humanPrompt = humanPrompt.toLowerCase(); // set the string to lower case only
+        if (humanPrompt != "rock" && humanPrompt != "paper" && humanPrompt != "scissors") {  //making sure the prompt is one of the possible choice, using && instead of || because otherwise its always false.
+            alert("You need to choose between rock, paper and scissors")
+            getHumanChoice();
         }else {
-            let lowerCaseText = userText.toLowerCase(); // set the string to lower case only
-            
-        };      
+            return humanPrompt;
+        };
+    };   
+};
+
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+        console.log(`It's a draw ${humanChoice} vs ${computerChoice}`); // back tick for expression inside of string
+
+    }else if (humanChoice === "rock" && computerChoice === "paper") {
+        console.log("You loose, paper beats rock");
+        computerScore++;
+
+    }else if (humanChoice === "rock" && computerChoice === "scissors") {
+        console.log("You win, rock beats scissors");
+        humanScore++;
+
+    }else if (humanChoice === "paper" && computerChoice === "scissors") {
+        console.log("You loose, scissors beats paper");
+        computerScore++;
+
+    }else if (humanChoice === "paper" && computerChoice === "rock") {
+        console.log("You win, paper beats rock");
+        humanScore++;
+
+    }else if (humanChoice === "scissors" && computerChoice === "rock") {
+        console.log("You loose, rock beats scissors");
+        computerScore++;
+
+    }else if (humanChoice === "scissors" && computerChoice === "paper") {
+        console.log("You win, scissors beats paper");
+        humanScore++;
+    }
+
 }
 
 
+//const humanSelection = getHumanChoice();
+//const computerSelection = getComputerChoice();
 
-getHumanChoice();
-alert(check);
+//playRound(humanSelection, computerSelection);
 
+function playGame() {
+    for (let i = 0; i < 5; i++) {     // loop until the number of round is 5 
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
+        console.log(humanScore + "vs" + computerScore);
+    }
+    if (humanScore > computerScore) {
+        console.log("You win the game, congrats")
+    }else {
+        console.log("Too bad, you loose the game")
+
+    }
+}
+
+playGame()
 
 
