@@ -70,24 +70,55 @@ function playRound(humanChoice, computerChoice) {
         humanScore++;
     }
 
+    if (humanScore >= 5){           
+        document.getElementById("result").textContent = "The Player wins, congrats";
+    
+    }else if(computerScore >= 5){
+        document.getElementById("result").textContent = "The Player looses, boo";
+        
+    };
+
 }
 
 
 function playGame() {
-    for (let i = 0; i < 5; i++) {     // loop until the number of round is 5 
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-        console.log(humanScore + "vs" + computerScore);
-    }
-    if (humanScore > computerScore) {
-        console.log("You win the game, congrats")
-    }else {
-        console.log("Too bad, you loose the game")
-
-    }
+     
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+    console.log(humanScore + "vs" + computerScore);
 }
 
-playGame()
+const rockbtn = document.querySelector("#rockbtn");
+rockbtn.addEventListener("click", () => {
+    const computerSelection = getComputerChoice();
+    playRound("rock", computerSelection);
+    document.getElementById('playerPara').textContent = "Player score : " + humanScore;
+    document.getElementById('computerPara').textContent = "Computer score : " + computerScore;
+});
+
+const paperbtn = document.querySelector("#paperbtn");
+paperbtn.addEventListener("click", () => {
+    const computerSelection = getComputerChoice();
+    playRound("paper", computerSelection);
+    document.getElementById('playerPara').textContent = "Player score : " + humanScore;
+    document.getElementById('computerPara').textContent = "Computer score : " + computerScore;
+});
+
+const scissorsbtn = document.querySelector("#scissorsbtn");
+scissorsbtn.addEventListener("click", () => {
+    const computerSelection = getComputerChoice();
+    playRound("scissors", computerSelection);
+    document.getElementById('playerPara').textContent = "Player score : " + humanScore;
+    document.getElementById('computerPara').textContent = "Computer score : " + computerScore;
+});
+
+
+
+
+
+
+
+
 
 
